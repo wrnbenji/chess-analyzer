@@ -244,7 +244,7 @@ export default function App() {
               <TrendsPanel report={trends.report} />
             </div>
           )}
-          <GamesList games={games} onSelect={setSelected} />
+          <GamesList games={games} username={profile.username} onSelect={setSelected} />
         </div>
       )}
 

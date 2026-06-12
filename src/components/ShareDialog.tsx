@@ -25,15 +25,14 @@ export function ShareDialog({
   const [fromPly, setFromPly] = useState(initial.fromPly)
   const [toPly, setToPly] = useState(initial.toPly)
   const gif = useGifExport()
-  const [copyNote, setCopyNote] = useState<string | null>(null)
 
   const rangeCount = toPly - fromPly + 1
   const tooLong = rangeCount > MAX_MOVES
 
-  // Preview: only the first frame — building the full range on every keystroke
-  // would churn ~1MB of SVG strings per change.
+  // Preview: only the first move's frame (skip the captionless intro) —
+  // building the full range on every keystroke would churn ~1MB of SVG per change.
   const previewFrame = useMemo(
-    () => (tooLong ? null : buildShareFrames({ moves, fens, fromPly, toPly: fromPly, white, black })[0] ?? null),
+    () => (tooLong ? null : buildShareFrames({ moves, fens, fromPly, toPly: fromPly, white, black }).at(-1) ?? null),
     [moves, fens, fromPly, white, black, tooLong],
   )
 
@@ -54,11 +53,6 @@ export function ShareDialog({
   }
   function clampTo(v: number) {
     setToPly(Math.min(moves.length, Math.max(v, fromPly)))
-  }
-
-  async function handleCopy() {
-    const result = await gif.copyToClipboard()
-    setCopyNote(result === 'gif' ? 'Copied to clipboard ✓' : 'Not supported here — use Download')
   }
 
   const filename = `${white.replace(/[^a-z0-9_-]/gi, '_')}-vs-${black.replace(/[^a-z0-9_-]/gi, '_')}-move${fromPly}.gif`
@@ -135,13 +129,9 @@ export function ShareDialog({
             </>
           )}
           {gif.state.status === 'done' && (
-            <>
-              <button onClick={() => gif.download(filename)} className="btn btn-primary px-4 py-2 text-sm">
-                Download
-              </button>
-              <button onClick={handleCopy} className="btn btn-ghost px-4 py-2 text-sm">Copy</button>
-              {copyNote && <span className="text-xs text-muted">{copyNote}</span>}
-            </>
+            <button onClick={() => gif.download(filename)} className="btn btn-primary px-4 py-2 text-sm">
+              Download
+            </button>
           )}
           {gif.state.status === 'error' && (
             <span className="rounded bg-red-900/30 px-3 py-2 text-xs text-red-300">{gif.state.message}</span>

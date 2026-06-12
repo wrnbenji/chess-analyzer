@@ -49,20 +49,5 @@ export function useGifExport() {
     URL.revokeObjectURL(url)
   }
 
-  // Copy the GIF to the clipboard. Browsers vary: Chrome accepts image/gif via
-  // ClipboardItem; others don't. Returns 'gif' or 'unsupported'.
-  async function copyToClipboard(): Promise<'gif' | 'unsupported'> {
-    if (state.status !== 'done') return 'unsupported'
-    try {
-      if (typeof ClipboardItem !== 'undefined') {
-        await navigator.clipboard.write([new ClipboardItem({ 'image/gif': state.blob })])
-        return 'gif'
-      }
-    } catch {
-      /* fall through */
-    }
-    return 'unsupported'
-  }
-
-  return { state, generate, cancel, download, copyToClipboard }
+  return { state, generate, cancel, download }
 }

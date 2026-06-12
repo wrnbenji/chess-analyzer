@@ -1,11 +1,10 @@
 import type { AnalyzedMove } from '../types'
 import { QUALITY_COLOR, QUALITY_LABEL, QUALITY_SYMBOL } from './eval'
 import { renderBoardSvg } from './boardSvg'
-import { uciOfSan } from './analysis'
 
 export const FRAME_W = 960
 export const FRAME_H = 540
-const BOARD_SIZE = 460
+export const BOARD_SIZE = 460
 const BOARD_X = 40
 const BOARD_Y = (FRAME_H - BOARD_SIZE) / 2
 const TEXT_X = BOARD_X + BOARD_SIZE + 48
@@ -60,30 +59,26 @@ function moveLabel(index: number, move: AnalyzedMove): string {
 export function buildShareFrames({ moves, fens, fromPly, toPly, white, black }: ShareFramesInput): FrameSpec[] {
   const frames: FrameSpec[] = []
   const font = 'font-family="system-ui, sans-serif"'
+  // One orientation for the whole clip — the first mover's perspective.
+  // Flipping per move made the board rotate 180° between frames.
+  const orientation = moves[fromPly - 1]?.color === 'b' ? 'black' : 'white'
+
+  const playersLine =
+    `<text x="${TEXT_X}" y="90" font-size="16" fill="#8b949e" ${font}>${esc(truncate(white, 18))} vs ${esc(truncate(black, 18))}</text>`
+
+  // Intro frame: the position before the first move, no move caption — every
+  // later frame shows a move that is already on the board, so positions never
+  // repeat and the playback reads as one smooth sequence.
+  frames.push({
+    svg: cinematicFrame(renderBoardSvg(fens[fromPly - 1], { size: BOARD_SIZE, orientation }), [playersLine]),
+    durationMs: 800,
+  })
 
   for (let ply = fromPly; ply <= toPly; ply++) {
     const move = moves[ply - 1]
     if (!move) continue
-    const orientation = move.color === 'b' ? 'black' : 'white'
-    const playersLine =
-      `<text x="${TEXT_X}" y="90" font-size="16" fill="#8b949e" ${font}>${esc(truncate(white, 18))} vs ${esc(truncate(black, 18))}</text>`
 
-    // Before-frame: anticipation — position with the move drawn as an arrow.
-    const uci = uciOfSan(fens[ply - 1], move.san)
-    const beforeBoard = renderBoardSvg(fens[ply - 1], {
-      size: BOARD_SIZE,
-      orientation,
-      arrow: uci ? { from: uci.from, to: uci.to, color: QUALITY_COLOR[move.quality] } : null,
-    })
-    frames.push({
-      svg: cinematicFrame(beforeBoard, [
-        playersLine,
-        `<text x="${TEXT_X}" y="260" font-size="26" fill="#e6edf3" font-weight="600" ${font}>${esc(moveLabel(ply - 1, move))}</text>`,
-      ]),
-      durationMs: 600,
-    })
-
-    // After-frame: the move landed — badge, big caption, story, win swing.
+    // One frame per move: the move landed — badge, big caption, story, win swing.
     const afterFen = move.fenAfter || fens[ply]
     // fenAfter is always set on real AnalyzedMoves; fens[ply] covers test fixtures.
     const afterBoard = renderBoardSvg(afterFen, {
