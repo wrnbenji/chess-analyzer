@@ -1,0 +1,11 @@
+[
+  { "eco": "C20", "name": "King's Pawn Game", "moves": "1. e4 e5" },
+  { "eco": "C40", "name": "King's Knight Opening", "moves": "1. e4 e5 2. Nf3" },
+  { "eco": "C60", "name": "Ruy Lopez", "moves": "1. e4 e5 2. Nf3 Nc6 3. Bb5" },
+  { "eco": "B20", "name": "Sicilian Defense", "moves": "1. e4 c5" },
+  { "eco": "B27", "name": "Sicilian Defense", "moves": "1. e4 c5 2. Nf3" },
+  { "eco": "D02", "name": "Queen's Pawn Game", "moves": "1. d4 d5" },
+  { "eco": "D30", "name": "Queen's Gambit", "moves": "1. d4 d5 2. c4" },
+  { "eco": "A40", "name": "Queen's Pawn Opening", "moves": "1. d4" },
+  { "eco": "B00", "name": "King's Pawn Opening", "moves": "1. e4" }
+]

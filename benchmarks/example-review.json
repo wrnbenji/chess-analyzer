@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-09T18:00:00.000Z",
+  "game": {
+    "url": "https://www.chess.com/game/live/example",
+    "timeControl": "60",
+    "rated": true,
+    "endTime": 1760000000,
+    "white": { "username": "White", "rating": 1500, "result": "win" },
+    "black": { "username": "Black", "rating": 1490, "result": "resigned" }
+  },
+  "opening": { "eco": "C20", "name": "King Pawn Game" },
+  "moves": [
+    {
+      "ply": 1,
+      "moveNumber": 1,
+      "color": "w",
+      "san": "e4",
+      "predicted": "book",
+      "expected": "book",
+      "winBefore": 50,
+      "winAfter": 50,
+      "winDrop": 0,
+      "cpDrop": 0,
+      "bestMoveSan": "e4",
+      "bestLineSan": ["e4", "e5"]
+    },
+    {
+      "ply": 2,
+      "moveNumber": 1,
+      "color": "b",
+      "san": "e5",
+      "predicted": "excellent",
+      "expected": "good",
+      "winBefore": 50,
+      "winAfter": 49,
+      "winDrop": 1,
+      "cpDrop": 12,
+      "bestMoveSan": "c5",
+      "bestLineSan": ["c5", "Nf3"]
+    }
+  ]
+}

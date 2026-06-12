@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark, education-tuned palette. */
+    --paper: #0d1117;
+    --surface: #161b22;
+    --surface-2: #1f2937;
+    --ink: #e6edf3;
+    --muted: #8b949e;
+    --line: #30363d;
+    --accent: #4fc3f7;
+    --accent-press: #29b6f6;
+
+    /* Board squares — muted slate. */
+    --board-light: #b8c0cc;
+    --board-dark: #5c6b7a;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Hanken Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Tabular figures wherever numbers must line up. */
+  .nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  .card {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.625rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  }
+
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: background-color 140ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 140ms ease, color 140ms ease, transform 140ms ease;
+  }
+  .btn:active {
+    transform: translateY(0.5px);
+  }
+  .btn-primary {
+    background-color: var(--accent);
+    color: #0d1117;
+  }
+  .btn-primary:hover {
+    background-color: var(--accent-press);
+  }
+  .btn-primary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-ghost:hover {
+    background-color: var(--surface-2);
+  }
+}
+
+/* One orchestrated reveal for the analysis view; respects reduced motion. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+}
