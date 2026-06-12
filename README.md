@@ -93,7 +93,7 @@ Frames are rendered as SVG, rasterized to canvas, and encoded with `gifenc` (~3 
 
 **1. Open the app**
 
-[Run it locally](#-local-development) with `npm install && npm run dev`, then open http://localhost:5173.
+Go to the live demo at **[mychessanalysis.vercel.app](https://mychessanalysis.vercel.app)** — or [run it locally](#-local-development) with `npm install && npm run dev`.
 
 **2. Search a player**
 
