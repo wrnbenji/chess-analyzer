@@ -11,12 +11,12 @@ async function getJson<T>(url: string): Promise<T> {
 }
 
 export async function getProfile(username: string): Promise<Profile> {
-  return getJson<Profile>(`${BASE}/player/${username.toLowerCase()}`)
+  return getJson<Profile>(`${BASE}/player/${encodeURIComponent(username.toLowerCase())}`)
 }
 
 export async function getArchives(username: string): Promise<string[]> {
   const data = await getJson<{ archives: string[] }>(
-    `${BASE}/player/${username.toLowerCase()}/games/archives`,
+    `${BASE}/player/${encodeURIComponent(username.toLowerCase())}/games/archives`,
   )
   return data.archives
 }

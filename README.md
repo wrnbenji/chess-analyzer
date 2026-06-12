@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-22c55e.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/wrnbenji/chess-analyzer?style=social)](https://github.com/wrnbenji/chess-analyzer/stargazers)
 
-[Quick start](#-quick-start) • [Features](#-features) • [How it works](#-how-it-works) • [Deploy](#-deploy) • [Roadmap](#-roadmap)
+[Quick start](#-quick-start) • [Features](#-features) • [How it works](#-how-it-works) • [Roadmap](#-roadmap)
 
 </div>
 
@@ -93,7 +93,7 @@ Frames are rendered as SVG, rasterized to canvas, and encoded with `gifenc` (~3 
 
 **1. Open the app**
 
-Go to the live demo at **[chess-analyzer.vercel.app](https://chess-analyzer.vercel.app)** — or [run it locally](#-local-development).
+[Run it locally](#-local-development) with `npm install && npm run dev`, then open http://localhost:5173.
 
 **2. Search a player**
 
@@ -166,39 +166,19 @@ Download from [stockfishchess.org/download](https://stockfishchess.org/download)
 
 ---
 
-## 🚢 Deploy
-
-### Vercel (recommended)
-
-```bash
-npx vercel
-```
-
-Or connect your GitHub repo on [vercel.com](https://vercel.com) — auto-deploys on every push to `main`.
-
-The included `vercel.json` sets the required `Cross-Origin-Opener-Policy` and `Cross-Origin-Embedder-Policy` headers (needed for Stockfish `SharedArrayBuffer`) and handles SPA routing.
-
-### Netlify / any static host
+## 🚢 Deploy (any static host)
 
 ```bash
 npm run build
 # upload dist/ to your host
 ```
 
-Configure your host to serve `index.html` for all routes, and set these response headers:
+Configure your host to serve `index.html` for all routes, and set these response headers (needed for Stockfish `SharedArrayBuffer`):
 
 ```
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Embedder-Policy: require-corp
 ```
-
-### Google AdSense
-
-The app ships with AdSense banner slots. To activate:
-
-1. Get a publisher ID at [google.com/adsense](https://www.google.com/adsense)
-2. Replace `ca-pub-XXXXXXXXXXXXXXXX` in `index.html` and `src/components/AdBanner.tsx`
-3. Replace the `data-ad-slot` values in `src/App.tsx` with your real slot IDs
 
 ---
 
